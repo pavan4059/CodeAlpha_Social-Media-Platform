@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse — Next-Gen Social Sphere</title>
+  <meta name="description" content="Experience Pulse, the next-generation social media sphere powered by cyber-violet aesthetics and reactive discussions.">
+  
+  <!-- FontAwesome Icons for Crisp UI -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Authentication Screen (Visible when logged out) -->
+  <div id="auth-screen" class="auth-container">
+    <div class="auth-box">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div class="brand-icon" style="margin: 0 auto 1rem; width: 52px; height: 52px; font-size: 1.6rem;">
+          <i class="fa-solid fa-bolt-lightning"></i>
+        </div>
+        <h1 style="font-size: 2rem; background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Welcome to Pulse</h1>
+        <p style="color: var(--text-muted); margin-top: 0.5rem;">Connect with innovators, developers, and artists in a reactive sphere.</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label">Username or Email</label>
+          <input type="text" id="login-id" class="form-input" placeholder="e.g. pawan_kalyan or alex@deepmind.ai" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn-primary w-full" style="margin-top: 0.5rem;">
+          <i class="fa-solid fa-right-to-bracket"></i> Enter Pulse
+        </button>
+        <p style="text-align: center; color: var(--text-muted); margin-top: 1.25rem;">
+          Don't have an account? <a href="#" id="show-register-btn" style="color: var(--accent-cyan); font-weight: 600;">Create One</a>
+        </p>
+      </form>
+
+      <!-- Register Form (Initially Hidden) -->
+      <form id="register-form" style="display: none;">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" id="reg-username" class="form-input" placeholder="lowercase, no spaces" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="reg-fullname" class="form-input" placeholder="Your Display Name" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="you@domain.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="reg-password" class="form-input" placeholder="At least 6 characters" required minlength="6" />
+        </div>
+        <button type="submit" class="btn-primary w-full" style="margin-top: 0.5rem;">
+          <i class="fa-solid fa-user-plus"></i> Join Pulse
+        </button>
+        <p style="text-align: center; color: var(--text-muted); margin-top: 1.25rem;">
+          Already have an account? <a href="#" id="show-login-btn" style="color: var(--accent-cyan); font-weight: 600;">Sign In</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Application Workspace (Visible when logged in) -->
+  <div id="app-screen" class="app-layout" style="display: none;">
+    
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar-left">
+      <div>
+        <div class="brand-logo">
+          <div class="brand-icon">
+            <i class="fa-solid fa-bolt-lightning"></i>
+          </div>
+          <span>Pulse</span>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-item active" data-nav="home"><i class="nav-icon fa-solid fa-house"></i> <span>Home</span></a></li>
+          <li><a href="#explore" class="nav-item" data-nav="explore"><i class="nav-icon fa-solid fa-compass"></i> <span>Explore</span></a></li>
+          <li><a href="#profile" class="nav-item" data-nav="profile"><i class="nav-icon fa-solid fa-user"></i> <span>Profile</span></a></li>
+        </ul>
+
+        <button id="nav-new-pulse-btn" class="btn-primary w-full" style="margin-top: 1.5rem;">
+          <i class="fa-solid fa-pen-nib"></i> <span>New Pulse</span>
+        </button>
+      </div>
+
+      <div class="user-badge">
+        <div class="flex items-center gap-3">
+          <img id="nav-user-avatar" src="" alt="Avatar" class="avatar" />
+          <div>
+            <div id="nav-user-name" style="font-weight: 700; color: var(--text-primary);">User</div>
+            <div id="nav-user-handle" style="font-size: 0.85rem; color: var(--text-muted);">@handle</div>
+          </div>
+        </div>
+        <button id="logout-btn" style="color: var(--text-muted); font-size: 1.2rem; padding: 0.4rem;" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Center Stream Column -->
+    <main class="main-stream">
+      <!-- Home Stream Header -->
+      <header id="stream-header" class="stream-header">
+        <div class="stream-tab active" data-feed="all">For You</div>
+        <div class="stream-tab" data-feed="following">Following</div>
+      </header>
+
+      <!-- Post Composer Container (In Home Feed) -->
+      <section id="feed-composer" class="composer-box">
+        <img id="composer-avatar" src="" alt="User" class="avatar" />
+        <div class="composer-input-wrapper">
+          <textarea id="composer-text" class="composer-textarea" placeholder="What is happening in your sphere today?"></textarea>
+          
+          <div id="composer-img-preview" class="image-preview-box">
+            <img id="preview-img-tag" src="" alt="Attachment" class="preview-img" />
+            <button id="remove-img-btn" class="remove-preview-btn"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+
+          <div class="composer-toolbar">
+            <div class="toolbar-actions">
+              <button id="add-img-btn" class="toolbar-btn" title="Attach Image URL"><i class="fa-regular fa-image"></i></button>
+              <span style="font-size: 0.85rem; color: var(--text-muted); align-self: center;" id="char-counter">0 / 500</span>
+            </div>
+            <button id="publish-btn" class="btn-primary" style="padding: 0.6rem 1.4rem;">
+              <i class="fa-solid fa-paper-plane"></i> Pulse
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Feed & Dynamic Content Area -->
+      <section id="feed-container">
+        <!-- Feed posts or profile view injected here dynamically -->
+      </section>
+    </main>
+
+    <!-- Right Widget Sidebar -->
+    <aside class="sidebar-right">
+      <!-- Who to follow recommendation widget -->
+      <div class="widget-card">
+        <h3 class="widget-title"><i class="fa-solid fa-user-astronaut" style="color: var(--accent-cyan);"></i> Who to Follow</h3>
+        <div id="suggestions-container" class="flex" style="flex-direction: column; gap: 1rem;">
+          <div style="color: var(--text-muted); font-size: 0.9rem;">Loading suggestions...</div>
+        </div>
+      </div>
+
+      <!-- Trending sphere widget -->
+      <div class="widget-card">
+        <h3 class="widget-title"><i class="fa-solid fa-fire" style="color: var(--accent-pink);"></i> Trending Topics</h3>
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Technology • Trending</div>
+            <div style="font-weight: 700; color: var(--text-primary); margin: 0.2rem 0;">#CyberViolet</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">1,842 pulses</div>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Development • Trending</div>
+            <div style="font-weight: 700; color: var(--text-primary); margin: 0.2rem 0;">Google DeepMind Agents</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">3,490 pulses</div>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Design Systems • Trending</div>
+            <div style="font-weight: 700; color: var(--text-primary); margin: 0.2rem 0;">Glassmorphic UI 2026</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">856 pulses</div>
+          </div>
+        </div>
+      </div>
+
+      <footer style="font-size: 0.8rem; color: var(--text-muted); padding: 0 0.5rem; line-height: 1.6;">
+        © 2026 Pulse Platform. Built for extraordinary speed & aesthetics.
+      </footer>
+    </aside>
+
+  </div>
+
+  <!-- Post Discussion & Comments Modal -->
+  <div id="post-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size: 1.3rem;">Thread Discussion</h3>
+        <button class="close-modal-btn" data-modal="post-modal" style="font-size: 1.4rem; color: var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="modal-post-details" class="modal-body">
+        <!-- Post content and existing comments rendered here -->
+      </div>
+      <div style="padding: 1rem; border-top: 1px solid var(--border-color); background: #0c0e16;">
+        <div class="flex gap-2">
+          <input type="text" id="new-comment-input" class="form-input" style="flex: 1;" placeholder="Write your reply..." />
+          <button id="post-comment-btn" class="btn-primary" style="padding: 0.6rem 1.25rem;">Reply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Edit Modal -->
+  <div id="edit-profile-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 style="font-size: 1.3rem;">Edit Profile</h3>
+        <button class="close-modal-btn" data-modal="edit-profile-modal" style="font-size: 1.4rem; color: var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="edit-profile-form" class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="edit-fullname" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Bio (max 250 chars)</label>
+          <textarea id="edit-bio" class="form-input" rows="3" maxlength="250"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Avatar Photo URL</label>
+          <input type="url" id="edit-avatar" class="form-input" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cover Banner URL</label>
+          <input type="url" id="edit-cover" class="form-input" placeholder="https://..." />
+        </div>
+        <button type="submit" class="btn-primary w-full" style="margin-top: 1rem;">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Image URL prompt modal/dialog (simple inline prompt replacement) -->
+  <div id="img-url-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 style="font-size: 1.2rem;">Attach Image URL</h3>
+        <button class="close-modal-btn" data-modal="img-url-modal" style="font-size: 1.4rem; color: var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Direct Image Link (e.g. Unsplash / Imgur)</label>
+          <input type="url" id="img-url-input" class="form-input" placeholder="https://images.unsplash.com/..." />
+        </div>
+        <div class="flex justify-between gap-3" style="margin-top: 1rem;">
+          <button type="button" class="btn-secondary w-full close-modal-btn" data-modal="img-url-modal">Cancel</button>
+          <button id="confirm-img-url" class="btn-primary w-full">Attach</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Error/Notification Box -->
+  <div id="toast-msg" class="toast"></div>
+
+  <!-- SPA Client Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
